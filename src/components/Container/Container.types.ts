@@ -4,5 +4,4 @@ export interface Container {
   id: string | number
   title: string
   tasks?: Task[]
-  addTask: (id: string | number) => void
 }

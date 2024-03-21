@@ -1,5 +1,3 @@
-import React from "react"
-
 const CreateTask = ({ isOpen }: { isOpen: boolean }) => {
   // const createTask = () => {
 
