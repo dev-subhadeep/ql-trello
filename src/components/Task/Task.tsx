@@ -13,9 +13,12 @@ const Task = ({ title, description, comments, label }: ITask) => {
       </div>
       <div>{title}</div>
       <div>{description}</div>
-      <div>
+      <div className="flex gap-2 text-slate-700 items-center">
         <DocumentIcon />
-        {comments?.length && <CommentIcon />}
+        <div className="flex items-center">
+          {comments > 0 && <CommentIcon />}
+          {comments > 0 && <span>{comments}</span>}
+        </div>
       </div>
     </div>
   )

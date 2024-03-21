@@ -10,5 +10,6 @@ export interface Task {
   label: string
   description?: string
   container: string
-  comments?: Comment[] | null
+  comments: number
+  //   comments?: Comment[] | null
 }
