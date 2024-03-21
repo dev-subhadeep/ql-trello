@@ -4,7 +4,7 @@ import { Task as ITask } from "./Task.types"
 
 const Task = ({ title, description, comments, label }: ITask) => {
   return (
-    <div className="bg-white p-2 min-h-[100px] shadow-sm border border-b-2 flex flex-col justify-between rounded-lg">
+    <div className="bg-white p-2 min-h-[90px] shadow-sm border border-b-2 flex flex-col justify-between rounded-lg">
       <div>
         <span
           style={{ backgroundColor: label }}
