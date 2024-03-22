@@ -15,49 +15,15 @@ import Container from "./Container"
 import Items from "./Items"
 import Modal from "./Modal"
 import { colors } from "../lib/data/colors"
-
-type DNDType = {
-  id: UniqueIdentifier
-  title: string
-  items: {
-    id: UniqueIdentifier
-    title: string
-    label: string
-    comments: number
-  }[]
-}
+import { DNDType } from "../lib/types"
+import { containersData } from "../lib/data/initialData"
 
 const KanbanBoard = () => {
-  const [containers, setContainers] = useState<DNDType[]>([
-    {
-      id: `container-${uuidv4()}`,
-      title: "Container 1",
-      items: [
-        {
-          id: `item-${uuidv4()}`,
-          title: "Item 1",
-          label: "green",
-          comments: 12,
-        },
-      ],
-    },
-    {
-      id: `container-${uuidv4()}`,
-      title: "Container 2",
-      items: [
-        {
-          id: `item-${uuidv4()}`,
-          title: "Item 2",
-          label: "green",
-          comments: 12,
-        },
-      ],
-    },
-  ])
+  const [containers, setContainers] = useState<DNDType[]>(containersData)
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
   const [currentContainerId, setCurrentContainerId] =
     useState<UniqueIdentifier>()
-  const [containerName, setContainerName] = useState("")
+
   const [itemName, setItemName] = useState("")
   const [showAddItemModal, setShowAddItemModal] = useState(false)
   const [label, setLabel] = useState("")
