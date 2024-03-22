@@ -1,7 +1,6 @@
 import {
   closestCorners,
   DndContext,
-  DragEndEvent,
   DragMoveEvent,
   DragStartEvent,
   //   KeyboardSensor,
@@ -20,7 +19,7 @@ import { containersData } from "../lib/data/initialData"
 
 const KanbanBoard = () => {
   const [containers, setContainers] = useState<DNDType[]>(containersData)
-  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
+  const [, setActiveId] = useState<UniqueIdentifier | null>(null)
   const [currentContainerId, setCurrentContainerId] =
     useState<UniqueIdentifier>()
 
@@ -138,8 +137,6 @@ const KanbanBoard = () => {
     }
   }
 
-  const handleDragEnd = (event: DragEndEvent) => {}
-
   const handleAddItem = () => {
     if (!itemName || !label) return
     const id = `item-${uuidv4()}`
@@ -188,7 +185,6 @@ const KanbanBoard = () => {
           collisionDetection={closestCorners}
           onDragStart={handleDragStart}
           onDragMove={handleDragMove}
-          onDragEnd={handleDragEnd}
         >
           <SortableContext items={containers.map((container) => container.id)}>
             {containers.map((container) => (

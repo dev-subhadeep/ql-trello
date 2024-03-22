@@ -11,19 +11,13 @@ interface ContainerProps {
 }
 
 const Container = ({ id, children, title, onAddItem }: ContainerProps) => {
-  const {
-    attributes,
-    setNodeRef,
-    listeners,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    id: id,
-    data: {
-      type: "container",
-    },
-  })
+  const { attributes, setNodeRef, listeners, transform, transition } =
+    useSortable({
+      id: id,
+      data: {
+        type: "container",
+      },
+    })
   return (
     <div
       className=" min-h-[200px] h-fit w-[400px] bg-slate-300 rounded-lg p-4"

@@ -12,19 +12,13 @@ type ItemsType = {
 }
 
 const Items = ({ id, title, label, comments }: ItemsType) => {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    id: id,
-    data: {
-      type: "item",
-    },
-  })
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({
+      id: id,
+      data: {
+        type: "item",
+      },
+    })
   return (
     <div
       className="mb-2"
