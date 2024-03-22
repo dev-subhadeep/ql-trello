@@ -148,6 +148,8 @@ const KanbanBoard = () => {
     container.items.push({ id, title: itemName, label: label, comments: 0 })
     setContainers([...containers])
     setShowAddItemModal(false)
+    setItemName("")
+    setLabel("")
   }
 
   return (
@@ -165,7 +167,7 @@ const KanbanBoard = () => {
           <select
             value={label}
             onChange={(e) => setLabel(e.target.value)}
-            className="outline-1 border border-blue-300 px-4 py-2 rounded-lg"
+            className="outline-1 border border-blue-300 px-4 py-2 rounded-lg capitalize"
           >
             <option>Choose Label</option>
             {colors.map((color) => (
