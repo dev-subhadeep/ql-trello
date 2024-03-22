@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from "uuid"
 import Container from "./Container"
 import Items from "./Items"
 import Modal from "./Modal"
+import { colors } from "../lib/data/colors"
 
 type DNDType = {
   id: UniqueIdentifier
@@ -59,6 +60,7 @@ const KanbanBoard = () => {
   const [containerName, setContainerName] = useState("")
   const [itemName, setItemName] = useState("")
   const [showAddItemModal, setShowAddItemModal] = useState(false)
+  const [label, setLabel] = useState("")
 
   function findValueOfItems(id: UniqueIdentifier | undefined, type: string) {
     if (type === "container") {
@@ -173,14 +175,14 @@ const KanbanBoard = () => {
   const handleDragEnd = (event: DragEndEvent) => {}
 
   const handleAddItem = () => {
-    if (!itemName) return
+    if (!itemName || !label) return
     const id = `item-${uuidv4()}`
     const container = containers.find(
       (container) => container.id === currentContainerId
     )
     if (!container) return
 
-    container.items.push({ id, title: itemName, label: "green", comments: 0 })
+    container.items.push({ id, title: itemName, label: label, comments: 0 })
     setContainers([...containers])
     setShowAddItemModal(false)
   }
@@ -197,6 +199,16 @@ const KanbanBoard = () => {
             onChange={(e) => setItemName(e.target.value)}
             className="outline-1 border border-blue-300 px-4 py-2 rounded-lg"
           />
+          <select
+            value={label}
+            onChange={(e) => setLabel(e.target.value)}
+            className="outline-1 border border-blue-300 px-4 py-2 rounded-lg"
+          >
+            <option>Choose Label</option>
+            {colors.map((color) => (
+              <option value={color.value}>{color.name}</option>
+            ))}
+          </select>
           <button
             onClick={handleAddItem}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg"

@@ -1,4 +1,4 @@
-import ModalProps from "../lib/types"
+import { ModalProps } from "../lib/types"
 
 const Modal = ({ children, showModal, setShowModal }: ModalProps) => {
   return (
