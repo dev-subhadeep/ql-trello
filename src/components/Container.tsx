@@ -43,7 +43,9 @@ const Container = ({ id, children, title, onAddItem }: ContainerProps) => {
       </h1>
       {children}
       <div>
-        <button className="pt-2 text-slate-600">+ Add a card</button>
+        <button className="pt-2 text-slate-600" onClick={onAddItem}>
+          + Add a card
+        </button>
       </div>
     </div>
   )

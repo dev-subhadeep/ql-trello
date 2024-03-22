@@ -13,6 +13,7 @@ import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import Container from "./Container"
 import Items from "./Items"
+import Modal from "./Modal"
 
 type DNDType = {
   id: UniqueIdentifier
@@ -20,6 +21,8 @@ type DNDType = {
   items: {
     id: UniqueIdentifier
     title: string
+    label: string
+    comments: number
   }[]
 }
 
@@ -32,6 +35,8 @@ const KanbanBoard = () => {
         {
           id: `item-${uuidv4()}`,
           title: "Item 1",
+          label: "green",
+          comments: 12,
         },
       ],
     },
@@ -42,6 +47,8 @@ const KanbanBoard = () => {
         {
           id: `item-${uuidv4()}`,
           title: "Item 2",
+          label: "green",
+          comments: 12,
         },
       ],
     },
@@ -165,34 +172,76 @@ const KanbanBoard = () => {
 
   const handleDragEnd = (event: DragEndEvent) => {}
 
+  const handleAddItem = () => {
+    if (!itemName) return
+    const id = `item-${uuidv4()}`
+    const container = containers.find(
+      (container) => container.id === currentContainerId
+    )
+    if (!container) return
+
+    container.items.push({ id, title: itemName, label: "green", comments: 0 })
+    setContainers([...containers])
+    setShowAddItemModal(false)
+  }
+
   return (
-    <div className="grid grid-col-4 gap-4">
-      <DndContext
-        collisionDetection={closestCorners}
-        onDragStart={handleDragStart}
-        onDragMove={handleDragMove}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext items={containers.map((container) => container.id)}>
-          {containers.map((container) => (
-            <Container
-              id={container.id}
-              key={container.id}
-              title={container.title}
-              onAddItem={() => {}}
-            >
-              <SortableContext items={container.items.map((item) => item.id)}>
-                <div>
-                  {container.items.map((item) => (
-                    <Items key={item.id} id={item.id} title={item.title} />
-                  ))}
-                </div>
-              </SortableContext>
-            </Container>
-          ))}
-        </SortableContext>
-      </DndContext>
-    </div>
+    <>
+      <Modal showModal={showAddItemModal} setShowModal={setShowAddItemModal}>
+        <div className="flex flex-col gap-4">
+          <h1 className="text-xl font-semibold">Create a new task</h1>
+          <input
+            type="text"
+            placeholder="Task Name"
+            value={itemName}
+            onChange={(e) => setItemName(e.target.value)}
+            className="outline-1 border border-blue-300 px-4 py-2 rounded-lg"
+          />
+          <button
+            onClick={handleAddItem}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+          >
+            Add Task
+          </button>
+        </div>
+      </Modal>
+      <div className="bg-blue-500 min-h-screen flex gap-2 p-2">
+        <DndContext
+          collisionDetection={closestCorners}
+          onDragStart={handleDragStart}
+          onDragMove={handleDragMove}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={containers.map((container) => container.id)}>
+            {containers.map((container) => (
+              <Container
+                id={container.id}
+                key={container.id}
+                title={container.title}
+                onAddItem={() => {
+                  setShowAddItemModal(true)
+                  setCurrentContainerId(container.id)
+                }}
+              >
+                <SortableContext items={container.items.map((item) => item.id)}>
+                  <div>
+                    {container.items.map((item) => (
+                      <Items
+                        key={item.id}
+                        id={item.id}
+                        title={item.title}
+                        label={item.label}
+                        comments={item.comments}
+                      />
+                    ))}
+                  </div>
+                </SortableContext>
+              </Container>
+            ))}
+          </SortableContext>
+        </DndContext>
+      </div>
+    </>
   )
 }
 
